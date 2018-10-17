@@ -26,7 +26,6 @@ public class Main extends javax.swing.JFrame {
     private ArrayList<Producto>Carnes =new ArrayList<Producto>();
     private ArrayList<Producto>Verduras =new ArrayList<Producto>();
     private DefaultListModel muestraListas= new DefaultListModel();
-    private DefaultListModel stockListas= new DefaultListModel();
     private DefaultListModel compraListas= new DefaultListModel();
     private ArrayList<Producto>Almacen =new ArrayList<Producto>();
     static int TotalCompra;
@@ -77,9 +76,6 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaMuestra = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        Stock = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         add = new javax.swing.JButton();
         remove = new javax.swing.JButton();
@@ -90,6 +86,7 @@ public class Main extends javax.swing.JFrame {
         total = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Supermercado");
         setMinimumSize(new java.awt.Dimension(1030, 530));
         getContentPane().setLayout(null);
 
@@ -116,25 +113,6 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(230, 80, 110, 16);
 
-        jLabel2.setText("Stock Disponible");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(350, 80, 107, 16);
-
-        jScrollPane2.setEnabled(false);
-        jScrollPane2.setFocusable(false);
-
-        Stock.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        Stock.setEnabled(false);
-        Stock.setFocusable(false);
-        jScrollPane2.setViewportView(Stock);
-
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(350, 110, 100, 234);
-
         jLabel3.setText("Categoria");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(50, 80, 120, 16);
@@ -146,13 +124,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
         getContentPane().add(add);
-        add.setBounds(480, 120, 80, 32);
+        add.setBounds(380, 120, 80, 32);
 
         remove.setText("<");
         getContentPane().add(remove);
-        remove.setBounds(480, 160, 80, 32);
+        remove.setBounds(380, 160, 80, 32);
         getContentPane().add(amount);
-        amount.setBounds(480, 210, 80, 30);
+        amount.setBounds(380, 210, 80, 30);
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "" };
@@ -162,7 +140,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jList1);
 
         getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(620, 110, 280, 230);
+        jScrollPane3.setBounds(520, 110, 280, 230);
 
         jButton1.setText("Calcular Total");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -188,14 +166,12 @@ public class Main extends javax.swing.JFrame {
          */
         int posi=Combo.getSelectedIndex();
         muestraListas.removeAllElements();
-        stockListas.removeAllElements();
         //lacteos
         if(posi==0){
             
             //agrego todos los lacteos al default list model
             for(int i=0; i<Lacteos.size();i++){
                 muestraListas.addElement(Lacteos.get(i).getNombreProducto());
-                stockListas.addElement(Lacteos.get(i).getStockProducto());
             }
         }//fin lacteos
         
@@ -205,7 +181,6 @@ public class Main extends javax.swing.JFrame {
             //agrego todas las carnes que haya
             for(int i=0;i<Carnes.size();i++){
                 muestraListas.addElement(Carnes.get(i).getNombreProducto());
-                stockListas.addElement(Carnes.get(i).getStockProducto());
             }
         }//fin carnes
         
@@ -213,12 +188,10 @@ public class Main extends javax.swing.JFrame {
         if(posi==2){
           for(int i=0;i<Verduras.size();i++){
               muestraListas.addElement(Verduras.get(i).getNombreProducto());
-              stockListas.addElement(Verduras.get(i).getStockProducto());
           }
         }//fin verduras
         
         ListaMuestra.setModel(muestraListas);
-        Stock.setModel(stockListas);
     }//GEN-LAST:event_ComboActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
@@ -235,7 +208,7 @@ public class Main extends javax.swing.JFrame {
                 cant=Integer.parseInt(aux);
                 
             }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "Ingrese un numero valido");
+                JOptionPane.showMessageDialog(null, "Ingrese un numero valido y entero");
                 amount.setText("");
             }
             
@@ -246,11 +219,13 @@ public class Main extends javax.swing.JFrame {
             int precioUnitario=0;
             int stockDisponible=0;
             int precioFinal=0;
+            int posicionProducto=-1;
             for(int i=0;i<Almacen.size();i++){
                 String auxi=Almacen.get(i).getNombreProducto();
                 if(auxi.equals(prod)){
                     precioUnitario=Almacen.get(i).getPrecioProducto();
                     stockDisponible=Almacen.get(i).getStockProducto();
+                    posicionProducto=i;
                 }
             }//fin recorrer lista almacen
             
@@ -259,7 +234,8 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No hay suficiente cantidad del producto");
             }else{
                 precioFinal=precioUnitario*cant;
-                System.out.println(precioFinal);
+                Almacen.get(posicionProducto).setStockProducto(stockDisponible-cant);
+                
             }
             
             TotalCompra=TotalCompra+precioFinal;
@@ -316,16 +292,13 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo;
     private javax.swing.JList<String> ListaMuestra;
-    private javax.swing.JList<String> Stock;
     private javax.swing.JButton add;
     private javax.swing.JTextField amount;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton remove;
     private javax.swing.JLabel total;
