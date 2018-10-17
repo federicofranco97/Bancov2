@@ -66,6 +66,9 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         Stock = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
+        add = new javax.swing.JButton();
+        remove = new javax.swing.JButton();
+        amount = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1030, 530));
@@ -94,9 +97,9 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(230, 80, 110, 16);
 
-        jLabel2.setText("Stock");
+        jLabel2.setText("Stock Disponible");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(360, 80, 107, 16);
+        jLabel2.setBounds(350, 80, 107, 16);
 
         jScrollPane2.setEnabled(false);
         jScrollPane2.setFocusable(false);
@@ -106,6 +109,7 @@ public class Main extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        Stock.setEnabled(false);
         Stock.setFocusable(false);
         jScrollPane2.setViewportView(Stock);
 
@@ -115,6 +119,16 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setText("Categoria");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(50, 80, 120, 16);
+
+        add.setText(">");
+        getContentPane().add(add);
+        add.setBounds(480, 120, 80, 32);
+
+        remove.setText("<");
+        getContentPane().add(remove);
+        remove.setBounds(480, 160, 80, 32);
+        getContentPane().add(amount);
+        amount.setBounds(480, 210, 80, 30);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -196,10 +210,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Combo;
     private javax.swing.JList<String> ListaMuestra;
     private javax.swing.JList<String> Stock;
+    private javax.swing.JButton add;
+    private javax.swing.JTextField amount;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton remove;
     // End of variables declaration//GEN-END:variables
 }
