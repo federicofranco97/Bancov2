@@ -65,6 +65,16 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
+    public Integer buscarProducto(String n){
+        int posi=-1;
+        for(int i=0;i<Almacen.size();i++){
+            String aux=Almacen.get(i).getNombreProducto();
+            if(n.equals(aux))posi=i;
+        }
+        return posi;
+        
+    }
+    
     
     
     //FUNCIONES
@@ -75,21 +85,27 @@ public class Main extends javax.swing.JFrame {
         Combo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaMuestra = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbl1 = new javax.swing.JLabel();
         add = new javax.swing.JButton();
         remove = new javax.swing.JButton();
-        amount = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        Compra = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
+        stock = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        lbl3 = new javax.swing.JLabel();
+        lbl4 = new javax.swing.JLabel();
         total = new javax.swing.JLabel();
+        lbl2 = new javax.swing.JLabel();
+        amount = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supermercado");
         setMinimumSize(new java.awt.Dimension(1030, 530));
         getContentPane().setLayout(null);
 
+        Combo.setBackground(new java.awt.Color(0, 0, 0));
+        Combo.setForeground(new java.awt.Color(255, 255, 255));
         Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lacteos", "Carnes", "Verduras"}));
         Combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,24 +115,32 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(Combo);
         Combo.setBounds(40, 120, 157, 26);
 
+        ListaMuestra.setBackground(new java.awt.Color(0, 0, 0));
+        ListaMuestra.setForeground(new java.awt.Color(255, 255, 255));
         ListaMuestra.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        ListaMuestra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListaMuestraMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(ListaMuestra);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(230, 110, 110, 234);
 
-        jLabel1.setText("Productos");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(230, 80, 110, 16);
+        lbl1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        lbl1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl1.setText("Categoria");
+        getContentPane().add(lbl1);
+        lbl1.setBounds(50, 69, 140, 30);
 
-        jLabel3.setText("Categoria");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(50, 80, 120, 16);
-
+        add.setBackground(new java.awt.Color(0, 0, 0));
+        add.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        add.setForeground(new java.awt.Color(255, 255, 255));
         add.setText(">");
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,24 +148,34 @@ public class Main extends javax.swing.JFrame {
             }
         });
         getContentPane().add(add);
-        add.setBounds(380, 120, 80, 32);
+        add.setBounds(480, 120, 80, 40);
 
+        remove.setBackground(new java.awt.Color(0, 0, 0));
+        remove.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        remove.setForeground(new java.awt.Color(255, 255, 255));
         remove.setText("<");
+        remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionPerformed(evt);
+            }
+        });
         getContentPane().add(remove);
-        remove.setBounds(380, 160, 80, 32);
-        getContentPane().add(amount);
-        amount.setBounds(380, 210, 80, 30);
+        remove.setBounds(480, 168, 80, 40);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        Compra.setBackground(new java.awt.Color(0, 0, 0));
+        Compra.setForeground(new java.awt.Color(255, 255, 255));
+        Compra.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane3.setViewportView(jList1);
+        jScrollPane3.setViewportView(Compra);
 
         getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(520, 110, 280, 230);
+        jScrollPane3.setBounds(620, 110, 140, 230);
 
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Calcular Total");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,10 +185,48 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(360, 400, 240, 40);
 
+        stock.setEditable(false);
+        stock.setBackground(new java.awt.Color(0, 0, 0));
+        stock.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(stock);
+        stock.setBounds(370, 120, 80, 40);
+        stock.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1030, 530));
+        jPanel1.setLayout(null);
+
+        lbl3.setFont(lbl1.getFont());
+        lbl3.setForeground(new java.awt.Color(255, 255, 255));
+        lbl3.setText("Stock Disponible:");
+        jPanel1.add(lbl3);
+        lbl3.setBounds(350, 80, 130, 19);
+
+        lbl4.setFont(lbl1.getFont());
+        lbl4.setForeground(new java.awt.Color(255, 255, 255));
+        lbl4.setText("Compra Actual:");
+        jPanel1.add(lbl4);
+        lbl4.setBounds(630, 80, 120, 19);
+
+        total.setBackground(new java.awt.Color(0, 0, 0));
         total.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         total.setOpaque(true);
-        getContentPane().add(total);
-        total.setBounds(630, 390, 210, 60);
+        jPanel1.add(total);
+        total.setBounds(630, 400, 190, 40);
+
+        lbl2.setFont(lbl1.getFont());
+        lbl2.setForeground(new java.awt.Color(255, 255, 255));
+        lbl2.setText("Productos");
+        jPanel1.add(lbl2);
+        lbl2.setBounds(230, 70, 110, 30);
+
+        amount.setBackground(new java.awt.Color(0, 0, 0));
+        amount.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(amount);
+        amount.setBounds(480, 230, 80, 30);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 1030, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,7 +307,8 @@ public class Main extends javax.swing.JFrame {
             }else{
                 precioFinal=precioUnitario*cant;
                 Almacen.get(posicionProducto).setStockProducto(stockDisponible-cant);
-                
+                compraListas.addElement(prod+":"+cant);
+                Compra.setModel(compraListas);
             }
             
             TotalCompra=TotalCompra+precioFinal;
@@ -250,11 +323,41 @@ public class Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(TotalCompra>1000){
             total.setBackground(Color.RED);
+            lbl1.setForeground(Color.red);
+            lbl2.setForeground(Color.red);
+            lbl3.setForeground(Color.red);
+            lbl4.setForeground(Color.red);
+            ListaMuestra.setForeground(Color.red);
+            stock.setForeground(Color.red);
+            Compra.setForeground(Color.red);
+            amount.setForeground(Color.red);
         }else{
             total.setBackground(Color.green);
+            lbl1.setForeground(Color.white);
+            lbl2.setForeground(Color.white);
+            lbl3.setForeground(Color.white);
+            lbl4.setForeground(Color.white);
+            ListaMuestra.setForeground(Color.white);
+            stock.setForeground(Color.white);
+            Compra.setForeground(Color.white);
+            amount.setForeground(Color.white);
         }
         total.setText("$ "+TotalCompra);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void ListaMuestraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMuestraMouseClicked
+        /**
+         * evento cuando se clickea un objeto de la lista
+         */
+        String aux=ListaMuestra.getSelectedValue();
+        int lugar=buscarProducto(aux);
+        stock.setText(String.valueOf(Almacen.get(lugar).getStockProducto()));
+                
+    }//GEN-LAST:event_ListaMuestraMouseClicked
+
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+        
+    }//GEN-LAST:event_removeActionPerformed
 
  
     public static void main(String args[]) {
@@ -291,16 +394,20 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Combo;
+    private javax.swing.JList<String> Compra;
     private javax.swing.JList<String> ListaMuestra;
     private javax.swing.JButton add;
     private javax.swing.JTextField amount;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbl1;
+    private javax.swing.JLabel lbl2;
+    private javax.swing.JLabel lbl3;
+    private javax.swing.JLabel lbl4;
     private javax.swing.JButton remove;
+    private javax.swing.JTextField stock;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }
