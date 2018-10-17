@@ -3,16 +3,18 @@
  * Clase principal con interfaz grafica interactiva
  */
 package GUI;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class Main extends javax.swing.JFrame {
 
 
     public Main() {
         initComponents();
-       
         agregarProductos();
+        generarAlmacen();
         setLocationRelativeTo(null );
     }
 
@@ -20,11 +22,14 @@ public class Main extends javax.swing.JFrame {
      * declaracion de variables
      */
     //VARIABLES
-    ArrayList<Producto>Lacteos =new ArrayList<Producto>();
-    ArrayList<Producto>Carnes =new ArrayList<Producto>();
-    ArrayList<Producto>Verduras =new ArrayList<Producto>();
-    DefaultListModel muestraListas= new DefaultListModel();
-    DefaultListModel stockListas= new DefaultListModel();
+    private ArrayList<Producto>Lacteos =new ArrayList<Producto>();
+    private ArrayList<Producto>Carnes =new ArrayList<Producto>();
+    private ArrayList<Producto>Verduras =new ArrayList<Producto>();
+    private DefaultListModel muestraListas= new DefaultListModel();
+    private DefaultListModel stockListas= new DefaultListModel();
+    private DefaultListModel compraListas= new DefaultListModel();
+    private ArrayList<Producto>Almacen =new ArrayList<Producto>();
+    static int TotalCompra;
     //VARIABLES
     
    
@@ -49,7 +54,17 @@ public class Main extends javax.swing.JFrame {
         Verduras.add(new Producto("Repollo", 300,"22/12/2020" ,20));
     }
     
- 
+    public void generarAlmacen(){
+        for(int i=0;i<Lacteos.size();i++){
+            Almacen.add(Lacteos.get(i));
+        }
+        for(int i=0;i<Carnes.size();i++){
+            Almacen.add(Carnes.get(i));
+        }
+        for(int i=0;i<Verduras.size();i++){
+            Almacen.add(Verduras.get(i));
+        }
+    }
     
     
     
@@ -69,6 +84,10 @@ public class Main extends javax.swing.JFrame {
         add = new javax.swing.JButton();
         remove = new javax.swing.JButton();
         amount = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
+        total = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1030, 530));
@@ -121,6 +140,11 @@ public class Main extends javax.swing.JFrame {
         jLabel3.setBounds(50, 80, 120, 16);
 
         add.setText(">");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
         getContentPane().add(add);
         add.setBounds(480, 120, 80, 32);
 
@@ -129,6 +153,30 @@ public class Main extends javax.swing.JFrame {
         remove.setBounds(480, 160, 80, 32);
         getContentPane().add(amount);
         amount.setBounds(480, 210, 80, 30);
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
+
+        getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(620, 110, 280, 230);
+
+        jButton1.setText("Calcular Total");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(360, 400, 240, 40);
+
+        total.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        total.setOpaque(true);
+        getContentPane().add(total);
+        total.setBounds(630, 390, 210, 60);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -173,6 +221,65 @@ public class Main extends javax.swing.JFrame {
         Stock.setModel(stockListas);
     }//GEN-LAST:event_ComboActionPerformed
 
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        /**
+         * Funcion para cuando clickean el boton de >
+         */
+        int cant=0;
+        String aux= amount.getText();
+        if(aux.equals("")){
+            cant=1;
+            
+        }else{
+            try{
+                cant=Integer.parseInt(aux);
+                
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Ingrese un numero valido");
+                amount.setText("");
+            }
+            
+        }//FIN ELSE
+        
+        if(cant>0){
+            String prod=ListaMuestra.getSelectedValue();
+            int precioUnitario=0;
+            int stockDisponible=0;
+            int precioFinal=0;
+            for(int i=0;i<Almacen.size();i++){
+                String auxi=Almacen.get(i).getNombreProducto();
+                if(auxi.equals(prod)){
+                    precioUnitario=Almacen.get(i).getPrecioProducto();
+                    stockDisponible=Almacen.get(i).getStockProducto();
+                }
+            }//fin recorrer lista almacen
+            
+            //filtro por si pide mas que la cantidad disponible
+            if(stockDisponible<cant){
+                JOptionPane.showMessageDialog(null, "No hay suficiente cantidad del producto");
+            }else{
+                precioFinal=precioUnitario*cant;
+                System.out.println(precioFinal);
+            }
+            
+            TotalCompra=TotalCompra+precioFinal;
+            
+            
+        }//end accion if cant > 0 
+
+        
+        
+    }//GEN-LAST:event_addActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(TotalCompra>1000){
+            total.setBackground(Color.RED);
+        }else{
+            total.setBackground(Color.green);
+        }
+        total.setText("$ "+TotalCompra);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -212,11 +319,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JList<String> Stock;
     private javax.swing.JButton add;
     private javax.swing.JTextField amount;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton remove;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }
