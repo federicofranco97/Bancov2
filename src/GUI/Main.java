@@ -98,6 +98,9 @@ public class Main extends javax.swing.JFrame {
         total = new javax.swing.JLabel();
         lbl2 = new javax.swing.JLabel();
         amount = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supermercado");
@@ -175,6 +178,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane3.setBounds(620, 110, 140, 230);
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setFont(lbl3.getFont());
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Calcular Total");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -224,6 +228,18 @@ public class Main extends javax.swing.JFrame {
         amount.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(amount);
         amount.setBounds(480, 230, 80, 30);
+
+        jLabel1.setText("Lac");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(40, 170, 160, 40);
+
+        jLabel2.setText("Carne");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(40, 270, 160, 40);
+
+        jLabel3.setText("Verdu");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(40, 220, 160, 40);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1030, 530);
@@ -399,6 +415,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton add;
     private javax.swing.JTextField amount;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
