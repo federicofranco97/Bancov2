@@ -312,7 +312,7 @@ public class Main extends javax.swing.JFrame {
             }
             
             TotalCompra=TotalCompra+precioFinal;
-            
+            amount.setText("");
             
         }//end accion if cant > 0 
 
