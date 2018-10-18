@@ -354,6 +354,8 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(TotalCompra>1000){
+            add.setVisible(true);
+            remove.setVisible(true);
             Plata.setVisible(true);
             total.setBackground(Color.RED);
             lbl1.setForeground(Color.red);
@@ -365,6 +367,8 @@ public class Main extends javax.swing.JFrame {
             Compra.setForeground(Color.red);
             amount.setForeground(Color.red);
         }else{
+            add.setVisible(true);
+            remove.setVisible(true);
             Plata.setVisible(false);
             total.setBackground(Color.green);
             lbl1.setForeground(Color.white);
@@ -390,6 +394,54 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMuestraMouseClicked
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+         int cant=0;
+        String aux= amount.getText();
+        if(aux.equals("")){
+            cant=1;
+            
+        }else{
+            try{
+                cant=Integer.parseInt(aux);
+                
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Ingrese un numero valido y entero");
+                amount.setText("");
+            }
+            
+        }//FIN ELSE
+        
+        if(cant>0){
+            if(Compra.getSelectedIndex()== -1){
+                JOptionPane.showMessageDialog(null, "Primero seleccione que item quiere quitar");
+                amount.setText("");
+                return;
+            }
+            int posiMarcada=Compra.getSelectedIndex();
+            String [] prodMarcado=Compra.getSelectedValue().split(":");
+            int precioDescontar=0;
+            if(cant> Integer.parseInt(prodMarcado[1])){
+                JOptionPane.showMessageDialog(null, "No hay suficioente cantidad");
+                amount.setText("");
+            }else{
+                //calculo del valor a descontar al total de la compra
+                int posiAlmacen=buscarProducto(prodMarcado[0]);
+                precioDescontar=cant*Almacen.get(posiAlmacen).getPrecioProducto();
+                int cantRestante=Integer.parseInt(prodMarcado[1])-cant;
+                if(cantRestante !=0){
+                    compraListas.remove(posiMarcada);
+                    compraListas.add(posiMarcada,prodMarcado[0]+":"+cantRestante);
+                }else{
+                    compraListas.remove(posiMarcada);
+                }
+                
+                //sumo la cantidad que saco de la lista de compra
+                Almacen.get(posiAlmacen).setStockProducto(Almacen.get(posiAlmacen).getStockProducto()+cant);
+                //resto el valor a descontar del total
+                TotalCompra=TotalCompra-precioDescontar;
+                Compra.setModel(compraListas);
+            }
+            
+        }
         
     }//GEN-LAST:event_removeActionPerformed
 
