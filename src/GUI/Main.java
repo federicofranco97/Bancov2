@@ -365,6 +365,7 @@ public class Main extends javax.swing.JFrame {
             Compra.setForeground(Color.red);
             amount.setForeground(Color.red);
         }else{
+            Plata.setVisible(false);
             total.setBackground(Color.green);
             lbl1.setForeground(Color.white);
             lbl2.setForeground(Color.white);
