@@ -98,9 +98,10 @@ public class Main extends javax.swing.JFrame {
         total = new javax.swing.JLabel();
         lbl2 = new javax.swing.JLabel();
         amount = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        leche = new javax.swing.JLabel();
+        Carne = new javax.swing.JLabel();
+        Verdu = new javax.swing.JLabel();
+        Plata = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supermercado");
@@ -229,17 +230,25 @@ public class Main extends javax.swing.JFrame {
         jPanel1.add(amount);
         amount.setBounds(480, 230, 80, 30);
 
-        jLabel1.setText("Lac");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(40, 170, 160, 40);
+        leche.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ezgif.com-resize.gif"))); // NOI18N
+        jPanel1.add(leche);
+        leche.setBounds(50, 160, 100, 80);
+        leche.setVisible(false);
 
-        jLabel2.setText("Carne");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(40, 270, 160, 40);
+        Carne.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ezgif.com-resize (2).gif"))); // NOI18N
+        jPanel1.add(Carne);
+        Carne.setBounds(50, 240, 100, 80);
+        Carne.setVisible(false);
 
-        jLabel3.setText("Verdu");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(40, 220, 160, 40);
+        Verdu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ezgif.com-resize (1).gif"))); // NOI18N
+        jPanel1.add(Verdu);
+        Verdu.setBounds(50, 320, 100, 80);
+        Verdu.setVisible(false);
+
+        Plata.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ezgif.com-resize (3).gif"))); // NOI18N
+        jPanel1.add(Plata);
+        Plata.setBounds(790, 110, 150, 100);
+        Plata.setVisible(false);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1030, 530);
@@ -256,7 +265,9 @@ public class Main extends javax.swing.JFrame {
         muestraListas.removeAllElements();
         //lacteos
         if(posi==0){
-            
+            leche.setVisible(true);
+            Carne.setVisible(false);
+            Verdu.setVisible(false);
             //agrego todos los lacteos al default list model
             for(int i=0; i<Lacteos.size();i++){
                 muestraListas.addElement(Lacteos.get(i).getNombreProducto());
@@ -265,7 +276,9 @@ public class Main extends javax.swing.JFrame {
         
         //Carnes
         if(posi==1){
-            
+            leche.setVisible(false);
+            Carne.setVisible(true);
+            Verdu.setVisible(false);
             //agrego todas las carnes que haya
             for(int i=0;i<Carnes.size();i++){
                 muestraListas.addElement(Carnes.get(i).getNombreProducto());
@@ -274,6 +287,9 @@ public class Main extends javax.swing.JFrame {
         
         //Verduras
         if(posi==2){
+            leche.setVisible(false);
+            Carne.setVisible(false);
+            Verdu.setVisible(true);
           for(int i=0;i<Verduras.size();i++){
               muestraListas.addElement(Verduras.get(i).getNombreProducto());
           }
@@ -338,6 +354,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(TotalCompra>1000){
+            Plata.setVisible(true);
             total.setBackground(Color.RED);
             lbl1.setForeground(Color.red);
             lbl2.setForeground(Color.red);
@@ -409,15 +426,15 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Carne;
     private javax.swing.JComboBox<String> Combo;
     private javax.swing.JList<String> Compra;
     private javax.swing.JList<String> ListaMuestra;
+    private javax.swing.JLabel Plata;
+    private javax.swing.JLabel Verdu;
     private javax.swing.JButton add;
     private javax.swing.JTextField amount;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -425,6 +442,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel lbl2;
     private javax.swing.JLabel lbl3;
     private javax.swing.JLabel lbl4;
+    private javax.swing.JLabel leche;
     private javax.swing.JButton remove;
     private javax.swing.JTextField stock;
     private javax.swing.JLabel total;
