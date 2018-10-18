@@ -101,7 +101,6 @@ public class Main extends javax.swing.JFrame {
         leche = new javax.swing.JLabel();
         Carne = new javax.swing.JLabel();
         Verdu = new javax.swing.JLabel();
-        Plata = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supermercado");
@@ -245,11 +244,6 @@ public class Main extends javax.swing.JFrame {
         Verdu.setBounds(50, 320, 100, 80);
         Verdu.setVisible(false);
 
-        Plata.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/ezgif.com-resize (3).gif"))); // NOI18N
-        jPanel1.add(Plata);
-        Plata.setBounds(790, 110, 150, 100);
-        Plata.setVisible(false);
-
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1030, 530);
 
@@ -356,7 +350,7 @@ public class Main extends javax.swing.JFrame {
         if(TotalCompra>1000){
             add.setVisible(true);
             remove.setVisible(true);
-            Plata.setVisible(true);
+            
             total.setBackground(Color.RED);
             lbl1.setForeground(Color.red);
             lbl2.setForeground(Color.red);
@@ -369,7 +363,7 @@ public class Main extends javax.swing.JFrame {
         }else{
             add.setVisible(true);
             remove.setVisible(true);
-            Plata.setVisible(false);
+            
             total.setBackground(Color.green);
             lbl1.setForeground(Color.white);
             lbl2.setForeground(Color.white);
@@ -483,7 +477,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Combo;
     private javax.swing.JList<String> Compra;
     private javax.swing.JList<String> ListaMuestra;
-    private javax.swing.JLabel Plata;
     private javax.swing.JLabel Verdu;
     private javax.swing.JButton add;
     private javax.swing.JTextField amount;
