@@ -75,6 +75,25 @@ public class Main extends javax.swing.JFrame {
         
     }
     
+    public void prodPerecedero(){
+        int posicion=-1;
+        String aux=ListaMuestra.getSelectedValue();
+        for(int i =0;i<Almacen.size();i++){
+            String nom=Almacen.get(i).getNombreProducto();
+            if(aux.equals(nom)){
+                posicion=i;
+            }
+        }//fin recorrer
+        
+        if(posicion>=0){
+            if(Almacen.get(posicion) instanceof ProductoPerecedero){
+                JOptionPane.showMessageDialog(null, "Este producto tiene aplicado un 10%\n"
+                        + "Ya que es un producto perecedero");
+            }else{
+                JOptionPane.showMessageDialog(null, "Este producto no tiene descuentos.");
+            }
+        }
+    }
     
     
     //FUNCIONES
@@ -451,23 +470,7 @@ public class Main extends javax.swing.JFrame {
         * Boton que muestre todos los productos que son perecederos
         * y que les aplique un descuento ya que se vencen
         */
-        int posicion=-1;
-        String aux=ListaMuestra.getSelectedValue();
-        for(int i =0;i<Almacen.size();i++){
-            String nom=Almacen.get(i).getNombreProducto();
-            if(aux.equals(nom)){
-                posicion=i;
-            }
-        }//fin recorrer
-        
-        if(posicion>=0){
-            if(Almacen.get(posicion) instanceof ProductoPerecedero){
-                JOptionPane.showMessageDialog(null, "Este producto tiene aplicado un 10%\n"
-                        + "Ya que es un producto perecedero");
-            }else{
-                JOptionPane.showMessageDialog(null, "Este producto no tiene descuentos.");
-            }
-        }
+        prodPerecedero();
          
          
     }//GEN-LAST:event_jButton3ActionPerformed
