@@ -6,18 +6,24 @@
  */
 package GUI;
 
+import javax.swing.JOptionPane;
+
 
 public class Producto {
     private String nombreProducto;
     private int stockProducto;
-    private String vencimiento;
     private int precioProducto;
 
-    public Producto(String nombre,int stock,String venc,int precio){
+    public Producto(String nombre,int stock,int precio){
         this.nombreProducto=nombre;
         this.stockProducto=stock;
-        this.vencimiento=venc;
         this.precioProducto=precio;
+    }
+    
+    public Producto(){
+        this.nombreProducto=JOptionPane.showInputDialog("Ingrese el nombre del producto");
+        this.stockProducto=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el stock del producto"));
+        this.precioProducto=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el precio del producto"));
     }
     public String getNombreProducto() {
         return nombreProducto;
@@ -35,13 +41,7 @@ public class Producto {
         this.stockProducto = stockProducto;
     }
 
-    public String getVencimiento() {
-        return vencimiento;
-    }
-
-    public void setVencimiento(String vencimiento) {
-        this.vencimiento = vencimiento;
-    }
+   
 
     public int getPrecioProducto() {
         return precioProducto;
