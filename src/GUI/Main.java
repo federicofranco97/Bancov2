@@ -40,9 +40,9 @@ public class Main extends javax.swing.JFrame {
     public void agregarProductos(){
         
         Lacteos.add(new Producto("Leche", 400, 30));
-        Lacteos.add(new Producto("Queso", 230, 45));
-        Lacteos.add(new Producto("Yogurt", 160, 16));
-        Lacteos.add(new Producto("Crema", 48, 10));
+        Lacteos.add(new ProductoPerecedero("Queso", 230, 45,"22/10/2019"));
+        Lacteos.add(new ProductoPerecedero("Yogurt", 160, 16,"12/8/2019"));
+        Lacteos.add(new ProductoPerecedero("Crema", 48, 10,"14/8/2019"));
         Carnes.add(new Producto("Lomo", 400, 400));
         Carnes.add(new Producto("Ribs", 250, 250));
         Carnes.add(new Producto("Vacio", 150,380));
@@ -50,6 +50,7 @@ public class Main extends javax.swing.JFrame {
         Verduras.add(new Producto("Lechuga", 300,30));
         Verduras.add(new Producto("Tomate", 300,36));
         Verduras.add(new Producto("Repollo", 300,20));
+        Verduras.add(new ProductoPerecedero("Palta", 300,20,"17/5/2019"));
     }
     
     public void generarAlmacen(){
@@ -98,6 +99,7 @@ public class Main extends javax.swing.JFrame {
         amount = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Supermercado");
@@ -177,6 +179,7 @@ public class Main extends javax.swing.JFrame {
         stock.setEditable(false);
         stock.setBackground(new java.awt.Color(0, 0, 0));
         stock.setForeground(new java.awt.Color(255, 255, 255));
+        stock.setText("0");
         getContentPane().add(stock);
         stock.setBounds(370, 120, 80, 40);
         stock.setHorizontalAlignment((int) CENTER_ALIGNMENT);
@@ -201,7 +204,7 @@ public class Main extends javax.swing.JFrame {
         total.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         total.setOpaque(true);
         jPanel1.add(total);
-        total.setBounds(430, 390, 190, 40);
+        total.setBounds(300, 390, 140, 40);
 
         lbl2.setFont(lbl1.getFont());
         lbl2.setForeground(new java.awt.Color(255, 255, 255));
@@ -224,7 +227,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(170, 390, 240, 40);
+        jButton1.setBounds(40, 390, 240, 40);
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
         jButton2.setFont(lbl2.getFont());
@@ -237,6 +240,18 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(jButton2);
         jButton2.setBounds(660, 392, 200, 40);
+
+        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setFont(lbl3.getFont());
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Promociones");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
+        jButton3.setBounds(460, 390, 150, 40);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1030, 530);
@@ -431,6 +446,32 @@ public class Main extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        /**
+        * Boton que muestre todos los productos que son perecederos
+        * y que les aplique un descuento ya que se vencen
+        */
+        int posicion=-1;
+        String aux=ListaMuestra.getSelectedValue();
+        for(int i =0;i<Almacen.size();i++){
+            String nom=Almacen.get(i).getNombreProducto();
+            if(aux.equals(nom)){
+                posicion=i;
+            }
+        }//fin recorrer
+        
+        if(posicion>=0){
+            if(Almacen.get(posicion) instanceof ProductoPerecedero){
+                JOptionPane.showMessageDialog(null, "Este producto tiene aplicado un 10%\n"
+                        + "Ya que es un producto perecedero");
+            }else{
+                JOptionPane.showMessageDialog(null, "Este producto no tiene descuentos.");
+            }
+        }
+         
+         
+    }//GEN-LAST:event_jButton3ActionPerformed
+
  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -472,6 +513,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField amount;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
