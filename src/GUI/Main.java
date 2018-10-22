@@ -39,18 +39,17 @@ public class Main extends javax.swing.JFrame {
      */
     public void agregarProductos(){
         
-        Lacteos.add(new Producto("Leche", 400, "22/12/2019", 30));
-        Lacteos.add(new Producto("Queso", 230, "15/6/2019", 45));
-        Lacteos.add(new Producto("Yogurt", 160, "13/7/2019", 16));
-        Lacteos.add(new Producto("Crema", 48, "12/3/2019", 10));
-        Carnes.add(new Producto("Lomo", 400, "22/12/2020", 400));
-        Carnes.add(new Producto("Ribs", 250, "12/3/2019", 250));
-        Carnes.add(new Producto("Vacio", 150,"13/7/2019",380));
-        Carnes.add(new Producto("Pollo", 423, "28/3/2019",120));
-        Verduras.add(new Producto("Lechuga", 300,"22/12/2020" ,30));
-        Verduras.add(new Producto("Tomate", 300,"22/12/2020" ,36));
-        Verduras.add(new Producto("Calabaza", 300,"22/12/2020" ,50));
-        Verduras.add(new Producto("Repollo", 300,"22/12/2020" ,20));
+        Lacteos.add(new Producto("Leche", 400, 30));
+        Lacteos.add(new Producto("Queso", 230, 45));
+        Lacteos.add(new Producto("Yogurt", 160, 16));
+        Lacteos.add(new Producto("Crema", 48, 10));
+        Carnes.add(new Producto("Lomo", 400, 400));
+        Carnes.add(new Producto("Ribs", 250, 250));
+        Carnes.add(new Producto("Vacio", 150,380));
+        Carnes.add(new Producto("Pollo", 423, 120));
+        Verduras.add(new Producto("Lechuga", 300,30));
+        Verduras.add(new Producto("Tomate", 300,36));
+        Verduras.add(new Producto("Repollo", 300,20));
     }
     
     public void generarAlmacen(){
